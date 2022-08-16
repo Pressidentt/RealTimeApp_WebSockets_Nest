@@ -6,4 +6,6 @@ export class CreatePostDto {
 
   userId : number;
 
+  sender : string;
+
 }

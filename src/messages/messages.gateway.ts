@@ -4,6 +4,8 @@ import { CreateMessageDto } from './dto/create-message.dto';
 import {Server, Socket} from 'socket.io'
 import { UsersService } from "../users/users.service";
 import { PostsService } from "../posts/posts.service";
+import { CreateUserDto } from "../users/dto/create-user.dto";
+import { CreatePostDto } from "../posts/dto/create-post.dto";
 @WebSocketGateway({
   cors : {
     origin: '*',
@@ -19,8 +21,8 @@ export class MessagesGateway {
               private readonly postService : PostsService) {}
 
   @SubscribeMessage('createMessage')
-   async create(@MessageBody() createMessageDto: CreateMessageDto, @ConnectedSocket() client : Socket) {
-    const message = await this.messagesService.create(createMessageDto, client.id);
+   async create(@MessageBody() createPostDto : CreatePostDto, @ConnectedSocket() client : Socket) {
+    const message = await this.messagesService.create(createPostDto, client.id);
     this.server.emit('message',message);
     return message;
   }
@@ -30,8 +32,8 @@ export class MessagesGateway {
     return this.messagesService.findAll();
   }
   @SubscribeMessage('join')
-  joinRoom(@MessageBody('name') name : string, @ConnectedSocket() client : Socket) {
-    return this.messagesService.identify(name, client.id);
+  joinRoom(@MessageBody() createUserDto : CreateUserDto, @ConnectedSocket() client : Socket) {
+    return this.messagesService.identify(createUserDto, client.id);
   }
 
 

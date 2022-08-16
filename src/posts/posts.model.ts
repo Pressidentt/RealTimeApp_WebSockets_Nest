@@ -4,6 +4,7 @@ import { User } from "../users/users.model";
 interface PostCreationAttrs {
   content: string;
   userId: number;
+  sender: string;
 }
 @Table({tableName: 'posts', timestamps:true})
 export class Post extends Model<Post, PostCreationAttrs> {
@@ -16,6 +17,9 @@ export class Post extends Model<Post, PostCreationAttrs> {
 
 @Column({type: DataType.INTEGER})
   userId: number;
+
+@Column({type:DataType.STRING})
+  sender: string;
 
 @BelongsTo(() => User)
   author: User;
