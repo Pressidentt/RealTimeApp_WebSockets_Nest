@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const port = process.env.PORT;
 
  const config = new DocumentBuilder()
     .setTitle('sockets/test/v1')
@@ -16,6 +17,6 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   console.log('Server started 3000')
-  await app.listen(3000);
+  await app.listen(port);
 }
 bootstrap();
