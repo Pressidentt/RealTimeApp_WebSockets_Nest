@@ -1,4 +1,4 @@
-import { BelongsTo, Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import { User } from "../users/users.model";
 
 interface PostCreationAttrs {
@@ -15,6 +15,7 @@ export class Post extends Model<Post, PostCreationAttrs> {
 @Column({type: DataType.STRING, allowNull: false})
   content: string;
 
+@ForeignKey(()=> User)
 @Column({type: DataType.INTEGER})
   userId: number;
 
